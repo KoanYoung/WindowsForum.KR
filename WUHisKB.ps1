@@ -1,6 +1,6 @@
-		Param([Switch]$Def)	
+	Param([Switch]$Def)	
 			
-		Clear-Host	
+	Clear-Host	
         $UpdateCollection = @()
         $objSession =  [Activator]::CreateInstance(`
 		[Type]::GetTypeFromProgID("Microsoft.Update.Session"))
