@@ -25,7 +25,7 @@
 		$obj.Title -Match "(KB\d+)" | Out-Null
 		
 		If($matches -eq $Null) 
-		  { Add-Member -InputObject $obj -MemberType NoteProperty -Name KB -Value "$ESC[33m[No KB] Device Driver$ESC[0m" } 
+		  { Add-Member -InputObject $obj -MemberType NoteProperty -Name KB -Value "$ESC[33m[No KB]$ESC[0m" } 
 		
 		Else 
 		  { Add-Member -InputObject $obj -MemberType NoteProperty -Name KB -Value "$ESC[93m$($matches[0])$ESC[0m" }	
