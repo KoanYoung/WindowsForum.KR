@@ -48,9 +48,10 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 if([bool]([Security.Principal.WindowsIdentity]::GetCurrent()).Groups -notcontains "S-1-5-32-544" ){ Start Powershell -ArgumentList "& '$MyInvocation.MyCommand.Path'" -Verb runas }
 #>
 
-. "$env:UserProfile\Downloads\PS1\AllDHash.ps1"
+. "$PSScriptRoot\AllDHash.ps1"
 
-$SSD = Get-PhysicalDisk | Where-Object { $_.MediaType -like "SSD" -and $_.PhysicalLocation -notlike "*.vhd*" } 
+$SSD = Get-PhysicalDisk | Where-Object { $_.MediaType -like "SSD" -and
+$_.PhysicalLocation -notlike "*.vhd*" } 
 $SSDRel = $SSD | Get-StorageReliabilityCounter
 
 ([PSCustomObject] @{
@@ -65,7 +66,8 @@ $SSDRel = $SSD | Get-StorageReliabilityCounter
 	'Write Errors Total' = $_.WriteErrorsTotal 
 } | Out-String).Trim()
 
-Get-WmiObject Win32_LogicalDisk | ForMat-Table Caption, VolumeName, FileSystem,
+Get-WmiObject Win32_LogicalDisk | 
+ForMat-Table Caption, VolumeName, FileSystem,
 @{N="Free(%)";E={"{0:N2} %" -f ((100 / ($_.Size / $_.FreeSpace)))}; 
 Align='Right'},
 @{N="Size(GB)";E={"{0:N2} GB" -f ($_.Size / 1Gb)}; Align='Right'}, 
@@ -98,9 +100,10 @@ $disksObject | Sort-Object DiskID | Format-Table -Auto
 (get-disk | select Number, FriendlyName | Out-String).Trim()
 Get-Volume | ForEach-Object {
     $VolObj = $_
-    $ParObj = Get-Partition | Where-Object { $_.AccessPaths -contains $VolObj.Path }
+    $ParObj = Get-Partition | Where-Object { $_.AccessPaths -contains 
+	$VolObj.Path }
     IF( $ParObj ) {
-        '{0,2} DN {1,1} PN {2,1} {3,6} {4,10} GB {5,10} GB {6}' -f `
+        '{0,2} DN {1,1} PN {2,1} {3,6} {4,10} GB {5,10} GB {6}' -f 
 		  $VolObj.DriveLetter,
           $ParObj.DiskNumber,
 		  $ParObj.PartitionNumber,
