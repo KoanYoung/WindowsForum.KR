@@ -106,7 +106,7 @@ $result = Get-WinEvent -FilterHashtable `
 	'Threat Help Link' = $GotIt.FWLink
 	}
 	
-. 'PS1\DFUN_Relevant.ps1'
+. "$PSScriptRoot\Reg-DefThr_Companion.ps1"
 
 $1 = Get-CimInstance -ClassName MSFT_MpThreatDetection -Namespace `
 root/microsoft/windows/defender | Sort-Object InitialDetectionTime -Desc | 

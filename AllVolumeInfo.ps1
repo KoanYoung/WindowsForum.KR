@@ -48,7 +48,7 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 if([bool]([Security.Principal.WindowsIdentity]::GetCurrent()).Groups -notcontains "S-1-5-32-544" ){ Start Powershell -ArgumentList "& '$MyInvocation.MyCommand.Path'" -Verb runas }
 #>
 
-. "$PSScriptRoot\AllDHash.ps1"
+. "$PSScriptRoot\AllVolumeInfo_Companion.ps1"
 
 $SSD = Get-PhysicalDisk | Where-Object { $_.MediaType -like "SSD" -and
 $_.PhysicalLocation -notlike "*.vhd*" } 
